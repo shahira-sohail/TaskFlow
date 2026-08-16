@@ -38,30 +38,38 @@ function TaskCard({title, priority, date, onDelete, id, onMove, moveTo, onEdit})
                   onChange={(e) => setEditedTitle(e.target.value)}
                 />
                 ) : (
-                    <div className="task-title-row">
-                        <h3>{editedTitle}</h3>
-
-                        <button
-                          className="edit-button"
-                          onPointerDown={(e) => e.stopPropagation()}
-                          onClick={() => setIsEditing(true)}>
-                            ✏️
-                        </button>
-                      </div>
+                    <button
+                      type="button"
+                      className="edit-button"
+                      onPointerDown={(e) => e.stopPropagation()}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                      e.stopPropagation();
+                      setIsEditing(true);
+              }}
+                >
+                  ✏️
+                </button>
                 )
             }
 
             {isEditing && (
               <button
+                type="button"
                 className="save-button"
-                onClick={() => {
-                  if (!editedTitle.trim()) return;
+                onPointerDown={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                e.stopPropagation();
 
-                  onEdit(id, editedTitle);
-                  setIsEditing(false);
-                }}>
-                Save
-              </button>
+               if (!editedTitle.trim()) return;
+
+               onEdit(id, editedTitle);
+               setIsEditing(false);
+        }}
+        >
+               Save
+            </button>
             )}
 
             <div className="task-footer">
